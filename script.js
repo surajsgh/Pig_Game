@@ -13,15 +13,33 @@ const btnRollElement = document.querySelector('.btn--roll');
 const btnHoldElement = document.querySelector('.btn--hold');
 
 // Scores of player one and player two in the array respectively
-let scores = [0, 0];
-let currentScore = 0;
-let activePlayer = 0;
-let playing = true;
+let scores,
+  currentScore,
+  activePlayer,
+  playing = 0;
 
 //Starting Condition
-score0Element.textContent = 0;
-score1Element.textContent = 0;
 diceElement.classList.add('hidden');
+
+const init = () => {
+  scores = [0, 0];
+  currentScore = 0;
+  activePlayer = 0;
+  playing = true;
+
+  document.getElementById(`current--0`).textContent = 0;
+  document.getElementById(`score--0`).textContent = 0;
+  document.getElementById(`current--1`).textContent = 0;
+  document.getElementById(`score--1`).textContent = 0;
+
+  diceElement.classList.add('hidden');
+  player0Element.classList.remove('player--winner');
+  player1Element.classList.remove('player--winner');
+  player0Element.classList.add('player--active');
+  player1Element.classList.remove('player--active');
+};
+
+init();
 
 const switchPlayer = () => {
   document.getElementById(`current--${activePlayer}`).textContent = 0;
@@ -31,9 +49,14 @@ const switchPlayer = () => {
   player1Element.classList.toggle('player--active');
 };
 
+// New Game Button Functionality
+btnNewElement.addEventListener('click', init);
+
 // Dice Rolling Functionality
 btnRollElement.addEventListener('click', function () {
+  // console.log('Before');
   if (playing) {
+    console.log('After');
     // 1. Generating a random dice roll
     const dice = Math.trunc(Math.random() * 6) + 1;
 
